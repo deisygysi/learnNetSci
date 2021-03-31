@@ -1,0 +1,13 @@
+Package: learnNetSci
+Type: Package
+Title: Workshop for Network Analysis for Bioinformatics
+Version: 0.1.0
+Author: Deisy Gysi 
+Maintainer: Deisy Gysi <deisy.ccnr@gmail.com>
+Description: NetSci course prepared for PEB2021. It gives a basic description of how to perform network analysis in Biological Data. 
+License: GPL-2
+Encoding: UTF-8
+LazyData: true
+Imports: igraph, magrittr, wTO, CoDiNA, dplyr, Rfast,
+         utils, binr, visNetwork, NetSci, learnr, data.table, tidyr, 
+          ggplot2
