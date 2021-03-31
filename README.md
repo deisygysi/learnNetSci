@@ -5,9 +5,9 @@ Northeastern University
 
 -----
 
-`learnNetSci` is a small `R` package that embeds a `ShinyApp` with learnr tools. 
+`learnNetSci` is a small `R` package that embeds a `ShinyApp` with `learnr` tools. 
 
-This tool will be used during the miniPEB - Programming for Evolutionary Biology 2021. 
+This tool will be used during the *miniPEB - Programming for Evolutionary Biology 2021*. 
 
 To install the tool, please use the following:
 
@@ -19,4 +19,4 @@ To run it:
 
 It will open a page on your browser and you can use `R` from there. 
 
-Have fun :)
+Have fun 😁
