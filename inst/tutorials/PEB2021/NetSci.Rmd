@@ -35,6 +35,7 @@ Here, I will start by introducing the basic network terminologies and then explo
 
 It is expected some degree of familiarity with `R`, `ggplot2`, `tidyr`, and `igraph`.
 
+
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, results='hide'}
 require(igraph)
 require(magrittr)
@@ -275,7 +276,7 @@ PPIs can be found from different sources. I list here some well-known databases 
 
 #### Understanding a PPI
 
-For this workshop, we will be using for this workshop is a combination of a manually curated PPI that combines all previous data sets. The data can be [found here](https://github.com/deisygysi/NetMed_Workshop/blob/master/data/PPI_Symbol_Entrez.csv). This PPI was previously published in @Gysi2020a.
+For this workshop, we will be using for this workshop is a combination of a manually curated PPI that combines all previous data sets. The data can be [found here](https://github.com/deisygysi/learnNetSci/blob/main/inst/tutorials/PEB2021/data/PPI_Symbol_Entrez.csv). This PPI was previously published in @Gysi2020a.
 
 Before we can start any analysis using this interactome, let us first understand this data.
 
@@ -1076,6 +1077,5 @@ visNetwork(nodes = x$x$nodes, edges = x$x$edges) %>%
   visLegend()
 
 ```
-
 
 ## References

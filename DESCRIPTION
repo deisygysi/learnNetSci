@@ -11,3 +11,4 @@ LazyData: true
 Imports: igraph, magrittr, wTO, CoDiNA, dplyr, Rfast, eulerr, kableExtra, lifecycle, 
          utils, binr, visNetwork, NetSci, learnr, data.table, tidyr, 
           ggplot2
+RoxygenNote: 7.1.1
