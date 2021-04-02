@@ -284,7 +284,7 @@ The PPI contains the EntrezID and the HGNC symbol of each gene, and some might n
 
 Let us begin by preparing our environment and calling all libraries we will need at this point.
 
-```{r prepare_enviroment, warning=FALSE, results='hide', message=FALSE}
+```{r prepare_enviroment, echo=TRUE, warning=FALSE, results='hide', message=FALSE}
 require(data.table)
 require(tidyr)
 require(igraph)
@@ -293,12 +293,20 @@ require(magrittr)
 require(ggplot2)
 ```
 
+```{r, exercise = TRUE, echo=TRUE}
+library(learnNetSci)
+```
+
 Let's read in our data.
+
 
 ```{r, exercise = FALSE, echo=TRUE}
 PPI = fread("./data/PPI_Symbol_Entrez.csv")
 
 head(PPI)
+```
+```{r empty, exercise = TRUE, echo=TRUE}
+
 ```
 
 Let's transform our edge-list into a network.
@@ -312,7 +320,7 @@ gPPI = PPI %>%
   simplify()
 ```
 
-```{r create-ppi, exercise = FALSE, echo=TRUE, exercise = TRUE, exercise.lines = 10}
+```{r create-ppi, exercise = TRUE, echo=TRUE, exercise = TRUE, exercise.lines = 10}
 gPPI = PPI %>% 
   select(starts_with("Symbol")) %>%
   filter(Symbol_A != "") %>%
@@ -355,6 +363,10 @@ degree(gPPI) %>%
   as.data.frame() %>% 
   arrange(desc(.)) %>%
   filter(. > 1000) 
+```
+
+```{r empty2, exercise = TRUE, echo=TRUE}
+
 ```
 
 #### Exercises
@@ -431,6 +443,10 @@ GDA = fread(file = 'data/curated_gene_disease_associations.tsv', sep = '\t')
 head(GDA)
 ```
 
+```{r emptygda, exercise = TRUE, echo=TRUE}
+
+```
+
 The first thing to notice is the inconsistency with the disease names, in order to be able to work with it, let's first put every disease to lower-case.
 
 ```{r, exercise = FALSE, echo=FALSE}
@@ -441,6 +457,10 @@ Cleaned_GDA = GDA %>%
          diseaseName, 
          diseaseSemanticType) %>%
   unique() 
+```
+
+```{r emptygda2, exercise = TRUE, echo=TRUE}
+
 ```
 
 ```{r GDA-clean, exercise = TRUE, echo=FALSE}
@@ -455,7 +475,17 @@ Cleaned_GDA = GDA %>%
 
 Let's also understand the degree distribution of the diseases.
 
-```{r, fig.cap= "Gene-Disease degree distribution.", echo=TRUE}
+```{r emptydistgda, exercise = TRUE, echo=TRUE}
+numGenes = Cleaned_GDA %>% 
+  group_by(diseaseName) %>%
+  summarise(numGenes = n()) %>%
+  ungroup() %>%
+  group_by(numGenes) %>%
+  summarise(numDiseases = n())
+```
+
+
+```{r, fig.cap= "Gene-Disease degree distribution.", echo=TRUE, exercise = FALSE}
 
 numGenes = Cleaned_GDA %>% 
   group_by(diseaseName) %>%
@@ -650,10 +680,26 @@ Histogram_LCC(LCC_scz)
 ```
 
 ```{r LCC-deisy, echo=TRUE, exercise = TRUE}
-LCC_scz = LCC_Significance(N = 1000, 
-                           Targets = SCZ_PPI,
-                           G = gPPI)
-Histogram_LCC(LCC_scz)
+
+```
+
+
+```{r, echo=TRUE, exercise = TRUE}
+gScz 
+
+V(gScz)$size = degree(gScz) %>% 
+  CoDiNA::normalize()
+V(gScz)$size = (V(gScz)$size + 0.1)*5
+V(gScz)$color = '#83c5be'
+V(gScz)$frame.color = '#006d77'
+V(gScz)$label = ifelse(V(gScz)$size  > 4, V(gScz)$name, NA )
+V(gScz)$label.color = '#e29578'
+
+E(gScz)$width = edge.betweenness(gScz, directed = F) %>% CoDiNA::normalize()
+E(gScz)$width = E(gScz)$width + 0.01
+E(gScz)$weight = E(gScz)$width
+par(mar = c(0,0,0,0))
+plot(gScz)
 ```
 
 ```{r, echo=TRUE, exercise = FALSE}
@@ -808,6 +854,12 @@ EULER = euler(Euler_List)
 plot(EULER, quantities = TRUE)
 ```
 
+
+```{r euler, echo=TRUE, exercise = TRUE}
+euler(Euler_List)
+```
+
+
 ### Disease Separation {#dissep}
 
 When looking into the Jaccard Index, we have a sense of how similar two diseases are based on genes that are **known** to be associated with both diseases. The main problem with this is that we assume that all genes associated with a disease is known, and we do not take the topology of the underlying network into account.
@@ -868,6 +920,8 @@ GG = visNetwork(x$x$nodes, x$x$edges)
 GG
 ```
 
+
+
 The separation of diseases A and B is given by: $$
 <d_{AA}> = 1.5
 $$
@@ -878,9 +932,12 @@ $$
 
 $$
 <d_{AB}> = 2.7
-$$ $$
+$$ 
+$$
 S_{AB} = 2.7 - \frac{1.5+ 1.5}2 = 1.2.
 $$
+
+
 
 #### Example in real data
 
@@ -892,6 +949,12 @@ Sep_ex2 = sab$Sab %>% as.matrix()
 Sep_ex2[lower.tri(Sep_ex2)] = t(Sep_ex2)[lower.tri(Sep_ex2)]
 ```
 
+
+```{r, echo=TRUE, exercise = TRUE}
+sab = separation(gPPI, GDA_Interest)
+
+sab
+```
 We can visualize the network separation of the diseases using a heatmap.
 
 ```{r, echo=TRUE, exercise = FALSE}
