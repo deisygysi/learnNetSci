@@ -8,6 +8,6 @@ Description: NetSci course prepared for PEB2021. It gives a basic description of
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
-Imports: igraph, magrittr, wTO, CoDiNA, dplyr, Rfast,
+Imports: igraph, magrittr, wTO, CoDiNA, dplyr, Rfast, eulerr, kableExtra, lifecycle, 
          utils, binr, visNetwork, NetSci, learnr, data.table, tidyr, 
           ggplot2
