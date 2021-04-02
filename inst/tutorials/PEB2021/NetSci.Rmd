@@ -684,7 +684,7 @@ Histogram_LCC(LCC_scz)
 ```
 
 
-```{r, echo=TRUE, exercise = TRUE}
+```{r SCZplot, echo=TRUE, exercise = TRUE}
 gScz 
 
 V(gScz)$size = degree(gScz) %>% 
@@ -950,7 +950,7 @@ Sep_ex2[lower.tri(Sep_ex2)] = t(Sep_ex2)[lower.tri(Sep_ex2)]
 ```
 
 
-```{r, echo=TRUE, exercise = TRUE}
+```{r sepex, echo=TRUE, exercise = TRUE}
 sab = separation(gPPI, GDA_Interest)
 
 sab
