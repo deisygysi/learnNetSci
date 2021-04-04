@@ -305,8 +305,9 @@ PPI = fread("./data/PPI_Symbol_Entrez.csv")
 
 head(PPI)
 ```
-```{r empty, exercise = TRUE, echo=TRUE}
 
+```{r empty, exercise = TRUE, echo=TRUE}
+# Let's look into the data
 ```
 
 Let's transform our edge-list into a network.
@@ -672,8 +673,8 @@ components(gScz)$csize %>% max
 
 The size of the LCC is 683. However, how does it compare to a random selection genes?
 
-```{r, echo=TRUE, exercise = FALSE}
-LCC_scz = LCC_Significance(N = 1000, 
+```{r LCC, echo=TRUE, exercise = TRUE}
+LCC_scz = LCC_Significance(N = 100, 
                            Targets = SCZ_PPI,
                            G = gPPI)
 Histogram_LCC(LCC_scz)
@@ -780,6 +781,18 @@ par(mar = c(0,0,0,0))
 plot(gDis)
 ```
 
+- Bipolar Disorder;
+
+```{r LCC-BD, exercise = TRUE, exercise.lines = 25}
+
+```
+
+- Major Depressive Disorder; 
+
+```{r LCC-MDD, exercise = TRUE, exercise.lines = 25}
+
+```
+
 -   Rheumatoid Arthritis;
 
 ```{r LCC-RA, exercise = TRUE, exercise.lines = 25}
@@ -819,6 +832,8 @@ Let's calculate the Jaccard Index for the diseases we calculated its LCCs.
 ```{r, echo=TRUE, exercise = FALSE}
 Dis_Ex1 = c('schizophrenia', 
             'autistic disorder',
+            'bipolar disorder',
+            "major depressive disorder",
             'asthma', 
             'rheumatoid arthritis',
             'parkinson disease',
@@ -841,6 +856,10 @@ Euler_List = list (
   SCZ = GDA_Interest$geneSymbol[GDA_Interest$diseaseName == 'schizophrenia'],
   
   ASD = GDA_Interest$geneSymbol[GDA_Interest$diseaseName == 'autistic disorder'],
+  
+  BD = GDA_Interest$geneSymbol[GDA_Interest$diseaseName == 'bipolar disorder'],
+  
+  MDD = GDA_Interest$geneSymbol[GDA_Interest$diseaseName == 'major depressive disorder'],
   
   AT = GDA_Interest$geneSymbol[GDA_Interest$diseaseName == 'asthma'],
   
@@ -922,7 +941,8 @@ GG
 
 
 
-The separation of diseases A and B is given by: $$
+The separation of diseases A and B is given by: 
+$$
 <d_{AA}> = 1.5
 $$
 
@@ -1101,10 +1121,18 @@ DiffNet = MakeDiffNet(Data = list(CTR_cl, BD_cl, MDD_cl, SCZ_cl),
                       Code = c("CTR", "BD", "MDD", "SCZ"))
 ```
 
+```{r Codina-ex, exercise = TRUE, echo=TRUE, results='markup'}
+require(CoDiNA)
+DiffNet = MakeDiffNet(Data = list(CTR_cl, BD_cl, MDD_cl, SCZ_cl),
+                      Code = c("CTR", "BD", "MDD", "SCZ"))
+```
+
+
 After comparing the networks, we need to filter them for links that strongly well-clustered and representative of their class.
 
 ```{r , exercise = FALSE, echo=TRUE, results='markup'}
-DiffNet_cl = DiffNet %>% filter( Score_ratio > 1)
+DiffNet_cl = DiffNet %>% 
+  filter( Score_ratio > 1)
 
 net_fig = plot(DiffNet_cl, cutoff.external = 0, cutoff.internal = 1)
 
