@@ -3,7 +3,7 @@ title: "Network Analysis for Biological Data"
 subtitle: "A surviving guide"
 author: "Deisy Morselli Gysi"
 institute: "Northeastern University"
-date: "April 2021 (updated: `r Sys.Date()`)"
+date: "April 2021"
 output:
   learnr::tutorial:
     progressive: true
@@ -585,7 +585,7 @@ In biological networks, genes are often involved in the same topological communi
 
 The size of the **largest connected component** (LCC) is the **number of nodes that form a connected subgraph** (in our case, it is the number of proteins that are interconnected in the PPI). Many properties of this quantity allow us to understand how a particular disease interacts with the interactome. It is important to note here that this measure is highly dependent on the completeness of an interactome. If a link between a protein and its counterparts is unknown -- therefore missing -- we might say that that particular node is not involved in a disease module (or that the LCC is not significant).
 
-```{r diseasemodule,fig.cap='Disease-Module. In a schematic of a PPI, in pink, we see genes associated with a disease, forming a connected component of size 4.', results='hide', echo=FALSE, warning=FALSE, message=FALSE}
+```{r diseasemodule,fig.cap='Disease-Module. In a schematic of a PPI, in pink, we see genes associated with a disease, forming a connected component of size 4.', echo=FALSE,  message=FALSE, warning=FALSE}
 
 require(NetSci)
 require(magrittr)
@@ -673,7 +673,7 @@ components(gScz)$csize %>% max
 
 The size of the LCC is 683. However, how does it compare to a random selection genes?
 
-```{r LCC, echo=TRUE, exercise = TRUE}
+```{r LCC, echo=TRUE, exercise = TRUE, exercise.timelimit = 1000}
 LCC_scz = LCC_Significance(N = 100, 
                            Targets = SCZ_PPI,
                            G = gPPI)
@@ -745,7 +745,7 @@ plot(gScz)
 
 -   Autistic Disorder;
 
-```{r LCC-autism, exercise = TRUE, exercise.lines = 25}
+```{r LCC-autism, exercise = TRUE, exercise.lines = 25, exercise.timelimit = 3000}
 
 ```
 
@@ -899,7 +899,7 @@ $$
 
 The size of the overlap is highly predictive of pathological and functional similarity, elevated co-expression, symptoms similarity, and high comorbidity diseases.
 
-```{r separation,fig.cap='Disease-Separation. In a schematic PPI, we see genes associated with a disease A (in pink), and genes associated to disease B (in green).', results='hide', echo=FALSE}
+```{r separation,fig.cap='Disease-Separation. In a schematic PPI, we see genes associated with a disease A (in pink), and genes associated to disease B (in green).', echo=FALSE}
 
 set.seed(124)
 N = 35
@@ -1039,6 +1039,9 @@ For the analysis we will be using the data from GSE12654 [@Iwamoto2004]. The fil
 
 
 ```{r brain, exercise = FALSE, echo=TRUE, results='markup'}
+
+require(wTO)
+require(CoDiNA)
 Brain = fread("./data/Brain.csv") %>% 
   as.data.frame()
 row.names(Brain) = Brain$V1
@@ -1060,8 +1063,6 @@ You'll need a `data.frame` with genes on the rows, individuals on the columns, g
 
 
 ```{r wtoBD, exercise = FALSE, echo=TRUE, results='markup'}
-require(wTO)
-
 BD = Brain %>% 
   dplyr::select(starts_with('BD')) %>%
   wTO.fast(n = 100, Data = .)

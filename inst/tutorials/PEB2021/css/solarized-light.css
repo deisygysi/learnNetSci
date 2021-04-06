@@ -255,8 +255,8 @@ h6 {
 .todo,
 .next,
 .done {
-  color: #fdf6e3;
-  background-color: #dc322f;
+  color: #002B36;
+  background-color: #EEE8D5;
   padding: 0 0.2em;
 }
 .tag {
